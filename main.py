@@ -7,6 +7,9 @@ from util import *
 from player import *
 
 pygame.init()
+pygame.display.set_caption("Sudoku")
+icon = pygame.image.load('icon.png')
+pygame.display.set_icon(icon)
 screen = pygame.display.set_mode((720, 720))
 clock = pygame.time.Clock()
 running = True
