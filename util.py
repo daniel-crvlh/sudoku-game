@@ -1,6 +1,6 @@
 import pygame
 
-def draw_board(screen: pygame.display, text_font):
+def draw_board(screen: pygame.display):
     size = 4
     size_square = pygame.Vector2(screen.get_width() / (size - 1), screen.get_height() / (size - 1))
 
@@ -66,4 +66,47 @@ def check_entry(list_number, number, position: pygame.Vector2):
                 clear_square = False
             
     return clear_col and clear_row and clear_square
+
+def find_empty_location(list_numbers, l):
+    for row in range(9):
+        for col in range(9):
+            if(list_numbers[row][col]== 0):
+                l[0]= row
+                l[1]= col
+                return True
+    return False
+
+# Source GeeksForGeeks
+def solve_sudoku(list_numbers): 
+
+    l =[0, 0]
+    
+    if(not find_empty_location(list_numbers, l)):
+        return True
+    
+    row = l[0]
+    col = l[1]
+    
+    # consider digits 1 to 9
+    for num in range(1, 10):
+        
+        if(check_entry(list_numbers, num, pygame.Vector2(col, row))):
+            
+            list_numbers[row][col]= num
+
+            if(solve_sudoku(list_numbers)):    
+                
+                return True
+
+            list_numbers[row][col] = 0
+            
+    return False 
+
+def get_solved(list_numbers):
+    
+    if(solve_sudoku(list_numbers)):
+        return list_numbers
+    else:
+        print ("No solution exists")
+        return list_numbers
 
